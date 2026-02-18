@@ -1,0 +1,30 @@
+하.. 그냥 일딴 한숨부터 나온다..
+
+docker pull dreamhackofficial/blue-whale:1 로 이미지를 받는다
+
+컨테이너로 실행해서 보니 flag가 없다.
+음.. 뭔가 bandit에서 git문제가 있었는데 뭔가 유사한 느낌이들어서 처음에는 만만하게 보았다.
+문제에 힌트가 있어서 보니 dive라는걸 이용해서 확인하는것 같다.
+근데 dive를 이용하려고 하니 계속 에러가 났다.. 하..
+사이트에서 하라는데로 설치 해보고 dive 이미지아이디 치니까 또 안된다..
+
+git허브에서 확인해보니
+
+alias dive="docker run -ti --rm -v /var/run/docker.sock:/var/run/docker.sock docker.io/wagoodman/dive"
+dive <your-image-tag>
+
+for example
+dive nginx:latest
+
+이런 명령어가 보였다.
+
+저대로 복사하고 your-image-tag에 dreamhackofficial/blue-whale 아이디를 넣어서 실행을 시켰더니 dive가 되었다!
+
+하지만 아직 끝난게 아니다 flag를 획득해야 하기에 진짜는 여기서부터 시작이다..
+
+RUN /bin/sh -c touch python3 -c "print(open('./flag', 'r').read())" # buildki
+이런게 보여서 그냥 내려봤는데 이게 뭔진 잘 모르겠지만 flag라는 단어가 보여서 이것이 단서인것같다.
+이쪽으로 맞추고 ctrl+tab을 눌렀더니 옆으로 이동한다.
+쭉 내려보니 home/chall/에 DH{~~~}
+flag라는 파일도 보인다
+드디어 2시간 만에 찾았다..
